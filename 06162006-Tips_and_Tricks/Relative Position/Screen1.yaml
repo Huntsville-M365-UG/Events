@@ -1,0 +1,126 @@
+Screens:
+  Screen1:
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+    Children:
+      - Container1:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            BorderThickness: =1
+            Height: =236
+            Width: =1113
+            X: =32
+            Y: =32
+          Children:
+            - TextInput1:
+                Control: ModernTextInput@1.1.0
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderStyle: =BorderStyle.Solid
+                  BorderThickness: =2
+                  X: =40
+                  Y: =58
+            - Combobox1:
+                Control: ModernCombobox@1.1.0
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderStyle: =BorderStyle.Solid
+                  BorderThickness: =2
+                  Width: =Parent.Width-Self.X-40
+                  X: =TextInput1.X+TextInput1.Width+20
+                  Y: =TextInput1.Y
+            - DatePicker1:
+                Control: ModernDatePicker@1.0.0
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderStyle: =BorderStyle.Solid
+                  BorderThickness: =2
+                  X: =40
+                  Y: =146
+            - Button1:
+                Control: ModernButton@1.0.0
+                Properties:
+                  X: =977
+                  Y: =146
+            - Text1:
+                Control: ModernText@1.0.0
+                Properties:
+                  X: =TextInput1.X
+                  Y: =TextInput1.Y-Self.Height
+            - Text1_1:
+                Control: ModernText@1.0.0
+                Properties:
+                  X: =40
+                  Y: =114
+            - Text1_2:
+                Control: ModernText@1.0.0
+                Properties:
+                  X: =Combobox1.X
+                  Y: =Combobox1.Y-Self.Height
+      - Container2:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            BorderThickness: =1
+            Height: =340
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =30
+            LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+            PaddingBottom: =30
+            PaddingLeft: =30
+            PaddingRight: =30
+            PaddingTop: =30
+            Width: =322
+            X: =32
+            Y: =310
+          Children:
+            - Button2:
+                Control: ModernButton@1.0.0
+                Properties:
+                  FillPortions: =1
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =16
+            - Button3:
+                Control: ModernButton@1.0.0
+                Properties:
+                  FillPortions: =1
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =16
+            - Button4:
+                Control: ModernButton@1.0.0
+                Properties:
+                  FillPortions: =1
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =16
+            - Button5:
+                Control: ModernButton@1.0.0
+                Properties:
+                  FillPortions: =1
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =16
+            - Container3:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =16
+                  PaddingBottom: =8
+                  PaddingLeft: =8
+                  PaddingRight: =8
+                  PaddingTop: =8
+                Children:
+                  - Button6:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                  - Button7:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
