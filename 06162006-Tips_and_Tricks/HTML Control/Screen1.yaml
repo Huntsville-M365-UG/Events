@@ -1,0 +1,47 @@
+Screens:
+  Screen1:
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+    Children:
+      - HtmlText1:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            DisabledBorderColor: =RGBA(161, 159, 157, 1)
+            Font: =Font.'Segoe UI'
+            Height: =697
+            HtmlText: |-
+              =$"
+              <div>
+              <p style='color:red;background:#EEE;font-size:2em;width:{Self.Width-20}px; height:1.5em; font-weight:800;padding:0;margin:0; position:fixed;'>Hello, World!</p>
+              <a style='color:blue; display:inline-block; margin-top:3em;' href='https://www.google.com' traget='_blank'>Go to Google</a><br>
+
+              <div style='display:flex;justify-content: space-between;'>
+                  <div>bob</div>
+                  <div>Alice</div>
+              </div>
+
+              <div>
+                  <table style='border:1px solid black; border-collapse:collapse; width:100%; table-layout:fixed;'>
+                      {
+                          Concat(
+                              Users,
+                              "<tr>
+                                  <td style='border:1px solid black;'>" & 'Full Name' & "</td>
+                                  <td style='border:1px solid black;'>" & 'Primary Email' & "</td>
+                              </tr>"
+                          )
+                      }
+                  </table>
+              </div>
+              </div>
+              "
+            Width: =1306
+            X: =30
+            Y: =32
+      - Button1:
+          Control: ModernButton@1.0.0
+          Properties:
+            OnSelect: =Navigate(Screen2)
+            X: =HtmlText1.X+HtmlText1.Width-Self.Width-30
+            Y: =44
