@@ -1,0 +1,131 @@
+ColorsOfFilament=
+    {
+        White: RGBA(255, 255, 255, 1),
+        Black: RGBA(0, 0, 0, 1),
+        BlackCF: RGBA(35, 35, 38, 1),
+        Green: RGBA(0, 163, 81, 1),
+        Yellow: RGBA(255, 222, 0, 1),
+        OchreCF: RGBA(139, 101, 38, 1),
+        Wood: RGBA(210, 180, 140, 1),
+        Blue: RGBA(0, 102, 204, 1),
+        Purple: RGBA(128, 64, 186, 1),
+        Grey: RGBA(120, 120, 120, 1),
+        Gold: RGBA(212, 175, 55, 1),
+        Skin: RGBA(255, 224, 189, 1),
+        PurpleCF: RGBA(88, 55, 117, 1),
+        GlowInTheDark: RGBA(0, 255, 128, 1),
+        MetallicSilver: RGBA(192, 192, 192, 1),
+        LightBlue: RGBA(173, 216, 230, 1),
+        Brown: RGBA(139, 69, 19, 1),
+        Red: RGBA(200, 0, 0, 1),
+        Clear: RGBA(245, 245, 245, 1),
+        WhiteText: "RGBA(255, 255, 255, 1)",
+        BlackText: "RGBA(0, 0, 0, 1)",
+        BlackCFText: "RGBA(35, 35, 38, 1)",
+        GreenText: "RGBA(0, 163, 81, 1)",
+        YellowText: "RGBA(255, 222, 0, 1)",
+        OchreCFText: "RGBA(139, 101, 38, 1)",
+        WoodText: "RGBA(210, 180, 140, 1)",
+        BlueText: "RGBA(0, 102, 204, 1)",
+        PurpleText: "RGBA(128, 64, 186, 1)",
+        GreyText: "RGBA(120, 120, 120, 1)",
+        GoldText: "RGBA(212, 175, 55, 1)",
+        SkinText: "RGBA(255, 224, 189, 1)",
+        PurpleCFText: "RGBA(88, 55, 117, 1)",
+        GlowInTheDarkText: "RGBA(0, 255, 128, 1)",
+        MetallicSilverText: "RGBA(192, 192, 192, 1)",
+        LightBlueText: "RGBA(173, 216, 230, 1)",
+        BrownText: "RGBA(139, 69, 19, 1)",
+        RedText: "RGBA(200, 0, 0, 1)",
+        ClearText: "RGBA(245, 245, 245, 1)"
+    };
+    FilamentSettings = Table([
+        {
+            Name: "CR-PETG",
+            NozzleTemp: "230°C - 250°C",
+            BedTemp: "70°C - 85°C",
+            PrintSpeed: "30 - 60 mm/s",
+            AdheasionMethod: "PEI + glue stick",
+            Enclosure: "Not required"
+        },
+        {
+            Name: "CR-PLA",
+            NozzleTemp: "200°C - 210°C",
+            BedTemp: "50°C - 60°C",
+            PrintSpeed: "40 - 60 mm/s",
+            AdheasionMethod: "PEI + glue stick",
+            Enclosure: "Not required"
+        },
+        {
+            Name: "CR-TPU",
+            NozzleTemp: "220°C - 240°C",
+            BedTemp: "&approx; 40°C",
+            PrintSpeed: "20 - 30 mm/s",
+            AdheasionMethod: "PEI + glue stick",
+            Enclosure: "Not advised"
+        },
+        {
+            Name: "Ender PLA+",
+            NozzleTemp: "200°C - 220°C",
+            BedTemp: "50°C - 65°C",
+            PrintSpeed: "40 - 70 mm/s",
+            AdheasionMethod: "PEI/glue stick",
+            Enclosure: "Not required"
+        },
+        {
+            Name: "Hyper ABS",
+            NozzleTemp: "230°C - 260°C",
+            BedTemp: "80°C - 95°C",
+            PrintSpeed: "50 - 300 mm/s",
+            AdheasionMethod: "Brim or raft",
+            Enclosure: "Recommended"
+        },
+        {
+            Name: "Hyper PLA",
+            NozzleTemp: "200°C - 230°C",
+            BedTemp: "60°C - 75°C",
+            PrintSpeed: "60 - 300 mm/s",
+            AdheasionMethod: "PEI/glue stick",
+            Enclosure: "Not required"
+        },
+        {
+            Name: "Hyper PLA RFID",
+            NozzleTemp: "200°C - 230°C",
+            BedTemp: "60°C - 75°C",
+            PrintSpeed: "60 - 300 mm/s",
+            AdheasionMethod: "PEI/glue stick",
+            Enclosure: "Not required"
+        },
+        {
+            Name: "Hyper PLA-CF",
+            NozzleTemp: "200°C - 230°C",
+            BedTemp: "60°C - 70°C",
+            PrintSpeed: "60 - 150 mm/s",
+            AdheasionMethod: "PEI + glue stick",
+            Enclosure: "Not required"
+        },
+        {
+            Name: "PETG",
+            NozzleTemp: "230°C - 245°C",
+            BedTemp: "70°C - 85°C",
+            PrintSpeed: "30 - 60 mm/s",
+            AdheasionMethod: "PEI + glue stick",
+            Enclosure: "Not required"
+        },
+        {
+            Name: "PLA",
+            NozzleTemp: "200°C - 220°C",
+            BedTemp: "50°C - 60°C",
+            PrintSpeed: "40 - 60 mm/s",
+            AdheasionMethod: "PEI + glue stick",
+            Enclosure: "Not required"
+        },
+        {
+            Name: "PLA Silk",
+            NozzleTemp: "200°C - 220°C",
+            BedTemp: "50°C - 60°C",
+            PrintSpeed: "40 - 60 mm/s",
+            AdheasionMethod: "PEI + glue stick",
+            Enclosure: "Not required"
+        }
+    ]);
