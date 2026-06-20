@@ -1,0 +1,812 @@
+Screens:
+  HOME SCREEN:
+    Properties:
+      Fill: =RGBA(106, 122, 127, 1)
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+      OnVisible: |+
+        =If(
+            !_InitFlag,
+            Concurrent(
+                ClearCollect(
+                    FilamentList,
+                    SortByColumns(
+                        AddColumns(
+                            'Filament List',
+                            TypeText, 'Filament Type'.Value,
+                            ColorText, 'Filament Color'.Value,
+                            BrandText, 'Brand Name'.Value
+                        ),
+                        "TypeText", SortOrder.Ascending,
+                        "ColorText", SortOrder.Ascending,
+                        "BrandText", SortOrder.Ascending
+                    )
+                ),
+                Set(
+                    _InitFlag,
+                    true
+                )
+            )
+        );
+
+    Children:
+      - cntFILAMENT_LIST:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            BorderThickness: =1
+            DropShadow: =DropShadow.Regular
+            Height: =Parent.Height-Self.Y-Self.BorderThickness*2-20
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Width: =Parent.Width/1.75-Self.BorderThickness*2
+            X: =Self.BorderThickness + 20
+            Y: =Self.BorderThickness+150
+          Children:
+            - galFilamentData:
+                Control: Gallery@2.15.0
+                Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height-Self.Y-Self.BorderThickness*2
+                  Items: "=AddColumns(\n    GroupBy(\n       \n            FilamentList,\n            \n        BrandText, TypeText, ColorText,\n        GroupedItems\n    ),\n    TotalRemaining, Sum(GroupedItems, Remaining)\n)"
+                  TemplateSize: =100
+                  Width: =Parent.Width-Self.BorderThickness*2
+                  X: =Self.BorderThickness
+                  Y: =Self.BorderThickness
+                Children:
+                  - shpActiveSelection:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =2
+                        DisabledFill: =RGBA(161, 159, 157, 1)
+                        Fill: =RGBA(214, 221, 224, 1)
+                        FocusedBorderThickness: =4
+                        Height: =Parent.TemplateHeight-shpSeparator.Height
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        OnSelect: =Select(Parent)
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                        Visible: =ThisItem.IsSelected
+                        Width: =txtFilamentType.X
+                  - txtFilamentType:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(50, 49, 48, 1)
+                        DisabledColor: =RGBA(161, 159, 157, 1)
+                        Font: =Font.'Segoe UI'
+                        FontWeight: =FontWeight.Bold
+                        Height: =51
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =12
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =16
+                        Text: =$"{ThisItem.TypeText}"
+                        Width: =200
+                        X: =115
+                  - txtBrandName:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(96, 94, 92, 1)
+                        DisabledColor: =RGBA(161, 159, 157, 1)
+                        Font: =Font.'Segoe UI'
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =24
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =12
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =12
+                        Text: =$"{ThisItem.BrandText}"
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =184
+                        X: =txtFilamentType.X
+                        Y: =txtFilamentType.Y + txtFilamentType.Height
+                  - shpSeparator:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        Fill: =RGBA(79, 90, 94, 1)
+                        Height: =2
+                        OnSelect: =Select(Parent)
+                        Width: =Parent.TemplateWidth
+                        Y: =Parent.TemplateHeight - Self.Height
+                  - cntCOLOR:
+                      Control: GroupContainer@1.5.0
+                      Variant: ManualLayout
+                      Properties:
+                        BorderThickness: =1
+                        Fill: |-
+                          =Switch(
+                              ThisItem.ColorText,
+                              "White", ColorsOfFilament.White,
+                              "Black", ColorsOfFilament.Black,
+                              "Black CF",ColorsOfFilament.BlackCF,
+                              "Green", ColorsOfFilament.Green,
+                              "Yellow", ColorsOfFilament.Yellow,
+                              "Ochre CF",ColorsOfFilament.OchreCF,
+                              "Wood", ColorsOfFilament.Wood,
+                              "Blue", ColorsOfFilament.Blue,
+                              "Purple", ColorsOfFilament.Purple,
+                              "Grey", ColorsOfFilament.Grey,
+                              "Gold", ColorsOfFilament.Gold,
+                              "Skin", ColorsOfFilament.Skin,
+                              "Purple CF", ColorsOfFilament.PurpleCF,
+                              "Glow-in-the-Dark",ColorsOfFilament.GlowInTheDark,
+                              "Metallic Silver",ColorsOfFilament.MetallicSilver,
+                              "LightBlue",ColorsOfFilament.LightBlue,
+                              "Brown", ColorsOfFilament.Brown,
+                              "Red", ColorsOfFilament.Red,
+                              "Clear", ColorsOfFilament.Clear
+                          )
+                        Height: =50
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Width: =75
+                        X: '=20  '
+                        Y: =Parent.TemplateHeight/2-Self.Height/2
+                  - galRepeatableData:
+                      Control: Gallery@2.15.0
+                      Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                      Properties:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        Height: =56
+                        Items: |-
+                          =Sort(
+                          ThisItem.GroupedItems,Condition.Value,SortOrder.Ascending)
+                        ShowScrollbar: =false
+                        TemplateSize: =26
+                        Width: =Parent.TemplateWidth-Self.X
+                        X: =galFilamentData.Selected.lblCondition.X
+                        Y: =41
+                      Children:
+                        - txtCondition:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(50, 49, 48, 1)
+                              DisabledColor: =RGBA(161, 159, 157, 1)
+                              Font: =Font.'Segoe UI'
+                              Height: =Parent.TemplateHeight
+                              LineHeight: =1
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =14
+                              Text: =$"{ThisItem.Condition.Value}"
+                              Width: =lblCondition.Width
+                        - txtRemaining:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(96, 94, 92, 1)
+                              DisabledColor: =RGBA(161, 159, 157, 1)
+                              Font: =Font.'Segoe UI'
+                              Height: =Parent.TemplateHeight
+                              LineHeight: =1
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =14
+                              Text: =ThisItem.Remaining
+                              Width: =lblRemaining.Width
+                              X: =txtCondition.Width
+                        - txtInStock:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(96, 94, 92, 1)
+                              DisabledColor: =RGBA(161, 159, 157, 1)
+                              Font: =Font.'Segoe UI'
+                              Height: =Parent.TemplateHeight
+                              LineHeight: =1
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =14
+                              Text: =ThisItem.Count
+                              Width: =lblInStock.Width
+                              X: =txtRemaining.X+txtRemaining.Width
+                  - lblCondition:
+                      Control: Text@0.0.51
+                      Properties:
+                        Size: =18
+                        Text: ="Condition"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        Width: =120
+                        X: =txtFilamentType.X+txtFilamentType.Width
+                        Y: =9
+                  - lblRemaining:
+                      Control: Text@0.0.51
+                      Properties:
+                        Size: =18
+                        Text: ="Remaining"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        Width: =120
+                        X: =lblCondition.X+lblCondition.Width
+                        Y: =lblCondition.Y
+                  - lblInStock:
+                      Control: Text@0.0.51
+                      Properties:
+                        Size: =18
+                        Text: ="In-stock"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Weight: ='TextCanvas.Weight'.Semibold
+                        X: =lblRemaining.X+lblRemaining.Width
+                        Y: =lblCondition.Y
+      - cntDETAILS:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            BorderThickness: =1
+            DropShadow: =DropShadow.Regular
+            Fill: =RGBA(238, 238, 238, 1)
+            Height: =cntFILAMENT_LIST.Height
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Width: =Parent.Width-Self.X-Self.BorderThickness - 20
+            X: =cntFILAMENT_LIST.Width+cntFILAMENT_LIST.X+15+Self.BorderThickness
+            Y: =cntFILAMENT_LIST.Y
+          Children:
+            - htmlDetails:
+                Control: HtmlViewer@2.1.0
+                Properties:
+                  DisabledBorderColor: =RGBA(161, 159, 157, 1)
+                  Fill: =RGBA(238, 238, 238, 1)
+                  Font: =Font.'Segoe UI'
+                  Height: =Parent.Height
+                  HtmlText: |-
+                    =$"
+                    <div>
+                        <div style='float:right;'>
+                            <img src='{First(First(galFilamentData.Selected.GroupedItems).Attachments).AbsoluteUri}'
+                            style='border:1px solid #999; box-shadow:-2px 2px 5px #AAA; border-radius:10px' width='200' height='200' style='background-color: 
+                            {
+                                Switch(
+                                    galFilamentData.Selected.ColorText,
+                                    "White", ColorsOfFilament.WhiteText,
+                                    "Black", ColorsOfFilament.BlackText,
+                                    "Black CF",ColorsOfFilament.BlackCFText,
+                                    "Green", ColorsOfFilament.GreenText,
+                                    "Yellow", ColorsOfFilament.YellowText,
+                                    "Ochre CF",ColorsOfFilament.OchreCFText,
+                                    "Wood", ColorsOfFilament.WoodText,
+                                    "Blue", ColorsOfFilament.BlueText,
+                                    "Purple", ColorsOfFilament.PurpleText,
+                                    "Grey", ColorsOfFilament.GreyText,
+                                    "Gold", ColorsOfFilament.GoldText,
+                                    "Skin", ColorsOfFilament.SkinText,
+                                    "Purple CF", ColorsOfFilament.PurpleCFText,
+                                    "Glow-in-the-Dark",ColorsOfFilament.GlowInTheDarkText,
+                                    "Metallic Silver",ColorsOfFilament.MetallicSilverText,
+                                    "LightBlue",ColorsOfFilament.LightBlueText,
+                                    "Brown", ColorsOfFilament.BrownText,
+                                    "Red", ColorsOfFilament.RedText
+                                ) 
+                            }' />
+                        </div>
+                        <div>
+                            <span style='font-size:2em; font-weight:bold;line-height:1.2em'>{galFilamentData.Selected.TypeText}</span><br />
+                            <span style='font-size:1.25em; line-height:1em;'>({galFilamentData.Selected.BrandText})</span><br />
+                            <em>Date Added: <b>{Text(First(galFilamentData.Selected.GroupedItems).Created,"mm-dd-yyyy")}</b></em>
+                        </div>
+                        <hr />
+                        <div>
+                            <b>Suggested Settings</b><br />
+                            <table style='border:1px solid #666;margin-top:.5em; width:{htmlDetails.Width-htmlDetails.PaddingLeft*3-imgLogo.Width}px;border-collapse:collapse'>
+                                <tr style='background:white'><td style='border:1px solid #666; padding:2px 5px;'>Nozzle Temp</td><td style='border:1px solid #666; padding:2px 5px;font-weight:600;'>{LookUp(FilamentSettings,Name=galFilamentData.Selected.TypeText, NozzleTemp)}</td></tr>
+                                <tr style='background:lightblue'><td style='border:1px solid #666; padding:2px 5px;'>Bed Temp</td><td style='border:1px solid #666; padding:2px 5px;font-weight:600;'>{LookUp(FilamentSettings,Name=galFilamentData.Selected.TypeText, BedTemp)}</td></tr>
+                                <tr style='background:white'><td style='border:1px solid #666; padding:2px 5px;'>Print Speed</td><td style='border:1px solid #666; padding:2px 5px;font-weight:600;'>{LookUp(FilamentSettings,Name=galFilamentData.Selected.TypeText, PrintSpeed)}</td></tr>
+                                <tr style='background:lightblue'><td style='border:1px solid #666; padding:2px 5px;'>Adheasion</td><td style='border:1px solid #666; padding:2px 5px;font-weight:600;'>{LookUp(FilamentSettings,Name=galFilamentData.Selected.TypeText, AdheasionMethod)}</td></tr>
+                                <tr style='background:white'><td style='border:1px solid #666; padding:2px 5px;'>Enclosure</td><td style='border:1px solid #666; padding:2px 5px;font-weight:600;'>{LookUp(FilamentSettings,Name=galFilamentData.Selected.TypeText, Enclosure)}</td></tr>
+                            </table>
+                        </div>
+                        <hr style='margin-top:1em;'/>
+                        <div>
+                            <p style='font-size:1.35em; font-weight:600; margin-top:0; margin-bottom:.25em'>
+                                Color: {galFilamentData.Selected.ColorText}   
+                            </p>
+                            <table style='font-size:1.25em; width:{htmlDetails.Width-htmlDetails.PaddingLeft*2}px; border:1px solid black;border-collapse:collapse'>
+                                <tr style='background:Teal; color:white'>
+                                    <th style='padding:2px 8px; width:33%;'>Condition</th>
+                                    <th style='padding:2px 8px; text-align:center;width:33%'>Remaining</th>
+                                    <th style='padding:2px 8px; text-align:center;width:33%'>On-hand</th>
+                                </tr>
+                                <tr style='background:#fff;'>
+                                    <td style='border:1px solid #999;padding:2px 8px;'>{Concat(galFilamentData.Selected.GroupedItems, 
+                                    If(Condition.Value = "New", $"<b>{Condition.Value}</b>",$"{Condition.Value}"), "<br />")}</td>
+                                    <td style='text-align:right;border:1px solid #999;padding:2px 8px;'>{Concat(galFilamentData.Selected.GroupedItems, 
+                                    If(Condition.Value = "Used", "&approx;") & Text(Remaining, 
+                                    If(Round(Remaining, 0) = Remaining, "0", "0.0#")) & " m", "<br />")}</td>
+                                    <td style='text-align:center;border:1px solid #999;padding:2px 8px;'>{Concat(galFilamentData.Selected.GroupedItems, Count, "<br />")}</td>
+                                </tr>
+                        </div>
+                        <div style='background:white; font-size:10pt; border: 1px dashed #666; position:absolute;bottom:20px; width:{htmlDetails.Width-htmlDetails.PaddingLeft*2}px; padding:.5em;' name='Footer'>
+                            Any filament marked as <b>used</b> with a date on or before <u>August 3, 2025</u>, reflects approximate usage. Accurate tracking of filament usage begins August 4, 2025. 
+                        </div>
+                    </div>
+                    "
+                  PaddingBottom: =20
+                  PaddingLeft: =15
+                  PaddingRight: =15
+                  PaddingTop: =15
+                  Width: =Parent.Width
+      - cntHEADER:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            BorderThickness: =1
+            Fill: =RGBA(40, 112, 134, 1)
+            Height: =135
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width+2
+            X: =-1
+            Y: =-1
+          Children:
+            - txtHeaderCount:
+                Control: Text@0.0.51
+                Properties:
+                  Align: ='TextCanvas.Align'.End
+                  FontColor: =RGBA(214, 221, 224, 1)
+                  Height: =24
+                  PaddingBottom: =0
+                  PaddingLeft: =5
+                  PaddingRight: =20
+                  PaddingTop: =0
+                  Text: |-
+                    =$"Total count: {CountRows(FilamentList)}"
+                  VerticalAlign: =VerticalAlign.Middle
+                  Weight: ='TextCanvas.Weight'.Semibold
+                  Width: =390
+                  X: =978
+                  Y: =110
+            - txtHeaderTitle:
+                Control: Text@0.0.51
+                Properties:
+                  Font: =Font.'Lato Black'
+                  FontColor: =RGBA(255, 255, 255, 1)
+                  Height: =70
+                  Size: =48
+                  Text: ="LIGER-TECH Filament Inventory"
+                  VerticalAlign: =VerticalAlign.Middle
+                  Width: =1043
+                  X: =195
+                  Y: =40
+      - imgLogo:
+          Control: Image@2.2.3
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            BorderStyle: =BorderStyle.None
+            BorderThickness: =2
+            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+            DisabledFill: =RGBA(0, 0, 0, 0)
+            FocusedBorderThickness: =4
+            Height: =200
+            HoverBorderColor: =RGBA(0, 0, 0, 0)
+            HoverFill: =RGBA(0, 0, 0, 0)
+            Image: ='LigerTechLogoOnly-01'
+            PressedBorderColor: =RGBA(0, 0, 0, 0)
+            PressedFill: =RGBA(0, 0, 0, 0)
+            Width: =200
+            Y: =-15
+      - btnEdit:
+          Control: Button@0.0.45
+          Properties:
+            Appearance: ='ButtonCanvas.Appearance'.Subtle
+            Icon: ="Edit"
+            IconStyle: ='ButtonCanvas.IconStyle'.Filled
+            OnSelect: |+
+              =Set(_SelectedRecord, galFilamentData.Selected);
+              UpdateContext({showOverlay:true});
+            Text: ="Edit"
+            X: =cntDETAILS.X+cntDETAILS.Width-Self.Width-htmlDetails.PaddingRight
+            Y: =414
+      - cntOVERLAY_EDIT:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(0, 0, 0, .65)
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =showOverlay
+            Width: =Parent.Width
+          Children:
+            - ButtonCanvas3:
+                Control: Button@0.0.45
+                Properties:
+                  BasePaletteColor: =RGBA(249, 83, 109, 1)
+                  BorderRadius: =0
+                  BorderThickness: =0
+                  Icon: ="Dismiss"
+                  IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                  OnSelect: =UpdateContext({showOverlay:false});
+                  Text: ="CLOSE"
+                  X: =Parent.Width-Self.Width
+            - Container2:
+                Control: GroupContainer@1.5.0
+                Variant: ManualLayout
+                Properties:
+                  BorderThickness: =1
+                  DropShadow: =DropShadow.Regular
+                  Height: =Gallery1_1.Height-Separator1_1.Height
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Width: =Gallery1_1.Width+Self.BorderThickness*2
+                  X: =Parent.Width/2 - (Self.Width + 25 + Container3.Width)/2
+                  Y: =110
+                Children:
+                  - Gallery1_1:
+                      Control: Gallery@2.15.0
+                      Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                      Properties:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        Height: =Self.TemplateHeight*CountRows(Self.AllItems)
+                        Items: =galFilamentData.Selected.GroupedItems
+                        Width: =475
+                      Children:
+                        - Rectangle1_2:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              Fill: =RGBA(255, 255, 255, 1)
+                              Height: =Parent.TemplateHeight - Separator1_1.Height
+                              OnSelect: =Select(Parent)
+                              Width: =Parent.TemplateWidth
+                        - Image1_1:
+                            Control: Image@2.2.3
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =2
+                              DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                              DisabledFill: =RGBA(0, 0, 0, 0)
+                              FocusedBorderThickness: =4
+                              Height: =72
+                              HoverBorderColor: =RGBA(0, 0, 0, 0)
+                              HoverFill: =RGBA(0, 0, 0, 0)
+                              Image: =ThisItem.Picture
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =RGBA(0, 0, 0, 0)
+                              PressedFill: =RGBA(0, 0, 0, 0)
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                              Width: =72
+                              X: =16
+                              Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                        - Title1_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(50, 49, 48, 1)
+                              DisabledColor: =RGBA(161, 159, 157, 1)
+                              Font: =Font.'Segoe UI'
+                              FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                              Height: =Self.Size * 1.8
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =12
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =14
+                              Text: =$"{ThisItem.'Filament Type'.Value} ({ThisItem.Condition.Value})"
+                              VerticalAlign: =VerticalAlign.Top
+                              Width: =Parent.TemplateWidth - 173
+                              X: =103
+                              Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle1_1.Size * 1.8)) / 2
+                        - Subtitle1_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(96, 94, 92, 1)
+                              DisabledColor: =RGBA(161, 159, 157, 1)
+                              Font: =Font.'Segoe UI'
+                              FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                              Height: =Self.Size * 1.8
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =12
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =12
+                              Text: |-
+                                =$"Amount remaining: {ThisItem.Remaining} meters"
+                              VerticalAlign: =VerticalAlign.Top
+                              Width: =Title1_1.Width
+                              X: =Title1_1.X
+                              Y: =Title1_1.Y + Title1_1.Height
+                        - Separator1_1:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              Fill: =RGBA(106, 122, 127, 1)
+                              Height: =2
+                              OnSelect: =Select(Parent)
+                              Width: =Parent.TemplateWidth
+                              Y: =Parent.TemplateHeight - Self.Height
+                        - Rectangle1_3:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              Fill: =RGBA(215, 58, 60, 1)
+                              Height: =Parent.TemplateHeight - Separator1_1.Height
+                              OnSelect: =Select(Parent)
+                              Visible: =ThisItem.IsSelected
+                              Width: =8
+            - Container3:
+                Control: GroupContainer@1.5.0
+                Variant: ManualLayout
+                Properties:
+                  BorderThickness: =1
+                  DropShadow: =DropShadow.Regular
+                  Fill: =RGBA(238, 238, 238, 1)
+                  Height: =310
+                  RadiusBottomLeft: =10
+                  RadiusBottomRight: =10
+                  RadiusTopLeft: =10
+                  RadiusTopRight: =10
+                  Width: =510
+                  X: =Container2.X+Container2.Width+25
+                  Y: =Container2.Y
+                Children:
+                  - TextCanvas1_3:
+                      Control: Text@0.0.51
+                      Properties:
+                        Font: =Font.'Lato Black'
+                        Height: =47
+                        Size: =24
+                        Text: =$"{Gallery1_1.Selected.'Brand Name'.Value} {Gallery1_1.Selected.'Filament Type'.Value} {Gallery1_1.Selected.'Filament Color'.Value} ({Gallery1_1.Selected.Condition.Value})"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Width: =557
+                        X: =19
+                        Y: =17
+                  - Form1:
+                      Control: Form@2.4.4
+                      Layout: Vertical
+                      Properties:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        DataSource: ='Filament List'
+                        Height: =152
+                        Item: =Gallery1_1.Selected
+                        NumberOfColumns: =2
+                        OnSuccess: |+
+                          =Patch(
+                              FilamentList,
+                              LookUp(FilamentList, ID = Form1.LastSubmit.ID),
+                              Form1.LastSubmit
+                          );
+                          ResetForm(Form1);
+                        Width: =Parent.Width
+                        Y: =81
+                      Children:
+                        - Count_DataCard1:
+                            Control: TypedDataCard@1.0.7
+                            Variant: NumberEdit
+                            IsLocked: true
+                            Properties:
+                              BorderColor: =RGBA(245, 245, 245, 1)
+                              DataField: ="Count"
+                              Default: =ThisItem.Count
+                              DisplayName: =DataSourceInfo([@'Filament List'],DataSourceInfo.DisplayName,'Count')
+                              Required: =true
+                              Update: =Value(DataCardValue1.Value)
+                              Width: =255
+                              X: =0
+                              Y: =0
+                            Children:
+                              - DataCardKey1:
+                                  Control: Text@0.0.51
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    Height: =22
+                                    Text: =Parent.DisplayName
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =Parent.Width - 48
+                                    Wrap: =false
+                                    X: =24
+                                    Y: =10
+                              - DataCardValue1:
+                                  Control: NumberInput@2.9.12
+                                  MetadataKey: FieldValue
+                                  Properties:
+                                    AccessibleLabel: =Parent.DisplayName
+                                    Appearance: ='NumberInput.Appearance'.FilledLighter
+                                    BorderColor: =RGBA(79, 90, 94, 1)
+                                    BorderStyle: =BorderStyle.Solid
+                                    BorderThickness: =1
+                                    DisplayMode: =Parent.DisplayMode
+                                    Max: =Blank()
+                                    Min: =Blank()
+                                    ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                    Value: =Parent.Default
+                                    Width: =Parent.Width - 48
+                                    X: =24
+                                    Y: =DataCardKey1.Y + DataCardKey1.Height + 4
+                              - ErrorMessage1:
+                                  Control: Text@0.0.51
+                                  MetadataKey: ErrorMessage
+                                  Properties:
+                                    Height: =30
+                                    Text: =Parent.Error
+                                    Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                    Width: =Parent.Width - 48
+                                    X: =24
+                                    Y: =DataCardValue1.Y + DataCardValue1.Height
+                              - StarVisible1:
+                                  Control: Text@0.0.51
+                                  MetadataKey: FieldRequired
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.Center
+                                    Height: =30
+                                    Text: ="*"
+                                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                    Width: =30
+                                    Y: =DataCardKey1.Y
+                        - Condition_DataCard1:
+                            Control: TypedDataCard@1.0.7
+                            Variant: ComboBoxEdit
+                            IsLocked: true
+                            Properties:
+                              BorderColor: =RGBA(245, 245, 245, 1)
+                              DataField: ="Condition"
+                              Default: =ThisItem.Condition
+                              DisplayName: =DataSourceInfo([@'Filament List'],DataSourceInfo.DisplayName,'Condition')
+                              Required: =true
+                              Update: =DataCardValue2.Selected
+                              Width: =255
+                              X: =1
+                              Y: =0
+                            Children:
+                              - DataCardKey2:
+                                  Control: Text@0.0.51
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    Height: =22
+                                    Text: =Parent.DisplayName
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =Parent.Width - 48
+                                    Wrap: =false
+                                    X: =24
+                                    Y: =10
+                              - DataCardValue2:
+                                  Control: ComboBox@0.0.51
+                                  MetadataKey: FieldValue
+                                  Properties:
+                                    AccessibleLabel: =Parent.DisplayName
+                                    Appearance: ='ComboboxCanvas.Appearance'.FilledLighter
+                                    BorderColor: =RGBA(79, 90, 94, 1)
+                                    BorderStyle: =BorderStyle.Solid
+                                    BorderThickness: =1
+                                    DefaultSelectedItems: =[Parent.Default]
+                                    DisplayMode: =Parent.DisplayMode
+                                    Items: =Choices([@'Filament List'].'Condition')
+                                    Required: =Parent.Required
+                                    ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                    Width: =Parent.Width - 48
+                                    X: =24
+                                    Y: =DataCardKey2.Y + DataCardKey2.Height + 4
+                              - ErrorMessage2:
+                                  Control: Text@0.0.51
+                                  MetadataKey: ErrorMessage
+                                  Properties:
+                                    Height: =30
+                                    Text: =Parent.Error
+                                    Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                    Width: =Parent.Width - 48
+                                    X: =24
+                                    Y: =DataCardValue2.Y + DataCardValue2.Height
+                              - StarVisible2:
+                                  Control: Text@0.0.51
+                                  MetadataKey: FieldRequired
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.Center
+                                    Height: =20
+                                    Text: ="*"
+                                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                    Width: =30
+                                    Y: =DataCardKey2.Y
+                        - Remaining_DataCard1:
+                            Control: TypedDataCard@1.0.7
+                            Variant: NumberEdit
+                            IsLocked: true
+                            Properties:
+                              BorderColor: =RGBA(245, 245, 245, 1)
+                              DataField: ="Remaining"
+                              Default: =ThisItem.Remaining
+                              DisplayName: =DataSourceInfo([@'Filament List'],DataSourceInfo.DisplayName,'Remaining')
+                              Required: =false
+                              Update: =Value(DataCardValue3.Value)
+                              Width: =255
+                              X: =0
+                              Y: =1
+                            Children:
+                              - DataCardKey3:
+                                  Control: Text@0.0.51
+                                  MetadataKey: FieldName
+                                  Properties:
+                                    Height: =22
+                                    Text: =Parent.DisplayName
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =Parent.Width - 48
+                                    Wrap: =false
+                                    X: =24
+                                    Y: =10
+                              - DataCardValue3:
+                                  Control: NumberInput@2.9.12
+                                  MetadataKey: FieldValue
+                                  Properties:
+                                    AccessibleLabel: =Parent.DisplayName
+                                    Appearance: ='NumberInput.Appearance'.FilledLighter
+                                    BorderColor: =RGBA(79, 90, 94, 1)
+                                    BorderStyle: =BorderStyle.Solid
+                                    BorderThickness: =1
+                                    DisplayMode: =Parent.DisplayMode
+                                    Max: =Blank()
+                                    Min: =Blank()
+                                    ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                    Value: =Parent.Default
+                                    Width: =Parent.Width - 48
+                                    X: =24
+                                    Y: =DataCardKey3.Y + DataCardKey3.Height + 4
+                              - ErrorMessage3:
+                                  Control: Text@0.0.51
+                                  MetadataKey: ErrorMessage
+                                  Properties:
+                                    Height: =30
+                                    Text: =Parent.Error
+                                    Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                    Width: =Parent.Width - 48
+                                    X: =24
+                                    Y: =DataCardValue3.Y + DataCardValue3.Height
+                              - StarVisible3:
+                                  Control: Text@0.0.51
+                                  MetadataKey: FieldRequired
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.Center
+                                    Height: =30
+                                    Text: ="*"
+                                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                    Width: =30
+                                    Y: =DataCardKey3.Y
+                  - ButtonCanvas2:
+                      Control: Button@0.0.45
+                      Properties:
+                        BasePaletteColor: =RGBA(189, 178, 176, 1)
+                        Icon: ="Checkmark"
+                        IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                        OnSelect: |
+                          =SubmitForm(Form1);
+                          UpdateContext({showOverlay: false});
+                        Text: ="UPDATE"
+                        X: =207
+                        Y: =248
